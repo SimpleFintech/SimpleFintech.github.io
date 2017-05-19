@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>Simple Fintech</title>
+  <meta name="description" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+
+  <meta name="generator" content="Simple Fintech">
+
+  
+  
+  
+
+  
+</head>
+
+
+<body class="post-template">
+
+  <header class="site-head"  style="background-image: url(/img/cover.png)" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="/img/bloglogo_1-1.png" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">Simple Fintech</h1>
+            <h2 class="blog-description"></h2>
+        </div>
+    </div>
+</header>
+  
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2017-05-19T05:51:46.997Z" itemprop="datePublished">
+          2017-05-19
+      </time>
+    
+</span>
+    <h1 class="post-title"></h1>
+    <section class="post-content">
+      <h1 id="React"><a href="#React" class="headerlink" title="React"></a>React</h1><blockquote>
+<p>这里面有很多内容，但是可以分解：JSX，React Elements，Components，Lifecycle Methods, Props and State。</p>
+</blockquote>
+<h2 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h2><h3 id="React是什么"><a href="#React是什么" class="headerlink" title="React是什么"></a>React是什么</h3><p>React(或者React.js，或者ReactJS)是个开源的、用于构建interactive UI的JavaScript <strong>库</strong>，<br>最初的作者是Facebook的一名工程师<a href="https://twitter.com/jordwalke" target="_blank" rel="external">Jordan Walke</a>，<br>目前由Facebook，Instagram和其他一些公司以及独立开发者维护。</p>
+<h3 id="React不是什么"><a href="#React不是什么" class="headerlink" title="React不是什么"></a>React不是什么</h3><h4 id="React不是MVC框架"><a href="#React不是MVC框架" class="headerlink" title="React不是MVC框架"></a>React不是MVC框架</h4><p>React不是一个框架，React仅仅处理应用中user interface相关部分，<br>对应于MVC结构中“V”的那部分，可以与其他框架或者库配合使用。</p>
+<h4 id="React不使用templates"><a href="#React不使用templates" class="headerlink" title="React不使用templates"></a>React不使用templates</h4><p>React不使用模版或者HTML directive，而是通过分解为<strong>components</strong>来构建<br>用户界面，可以说提供了一种用来render view的语言。</p>
+<ul>
+<li>基于Javascript，具备构建Abstraction的能力，这对于大型程序很重要。</li>
+<li>把Markup和对应的view逻辑放在一起，使得创建的views更易于维护、修改。</li>
+<li>利用语言接口，避免手工拼接字符串，减少了XSS的风险。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;select</div><div class="line">  ng-model=<span class="string">"selectedItem"</span></div><div class="line">  ng-options=<span class="string">"item as item.name for item in items"</span>&gt;</div><div class="line">&lt;/select&gt;</div></pre></td></tr></table></figure>
+<p>最后，React还提供了语法糖JSX，使得开发者可以用更熟悉的、可读性更强的HTML替代Javascript语句。</p>
+<h3 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h3><h4 id="有什么不同"><a href="#有什么不同" class="headerlink" title="有什么不同"></a>有什么不同</h4><p>React处理Data变化的方式与传统Web应用不同。传统的JavaScript应用里，当data发生变化时，<br>你需要查看是什么数据变化了，然后以指令方式对DOM进行相应的修改，以保持界面跟数据的同步。</p>
+<p>React采用的完全不同的策略。当component初始化时，<em>render</em>方法生成一个view——一段markup字符串，<br>插入到document中；当data发生变化时，<strong>再次调用<em>render</em>方法</strong>。<br>React会将本次调用render得到的view与上次调用render得到的结果进行比较，通过高效的diff<br>算法，<strong>算出最小修改集合</strong>，并应用到DOM上。</p>
+<h4 id="一个实例"><a href="#一个实例" class="headerlink" title="一个实例"></a>一个实例</h4><h3 id="演进"><a href="#演进" class="headerlink" title="演进"></a>演进</h3><ul>
+<li>原生Javascript</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> rootElement =</div><div class="line">  React.createElement(<span class="string">'div'</span>, &#123;&#125;,</div><div class="line">    React.createElement(<span class="string">'h1'</span>, &#123;<span class="attr">style</span>: &#123;<span class="attr">color</span>: <span class="string">'red'</span>&#125;&#125;, <span class="string">'The world is yours'</span>),</div><div class="line">    React.createElement(<span class="string">'p'</span>, &#123;&#125;, <span class="string">'Say hello to my little friend'</span>)</div><div class="line">  )</div><div class="line"></div><div class="line">ReactDOM.render(rootElement, <span class="built_in">document</span>.getElementById(<span class="string">'app'</span>))</div></pre></td></tr></table></figure>
+<ul>
+<li>JSX</li>
+</ul>
+<p>JSX是Facebook为不喜欢纯JavaScript代码的人搞的“语法糖”，下面的代码与上面等价。<br>在build阶段，<a href="https://babeljs.io/repl/#?babili=false&amp;evaluate=true&amp;lineWrap=false&amp;presets=es2015%2Creact%2Cstage-2&amp;targets=&amp;browsers=&amp;builtIns=false&amp;code=x" target="_blank" rel="external">Babel</a><br>会将Markup转译成JS代码。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> RootElement = (</div><div class="line">  &lt;div&gt;</div><div class="line">    &lt;h1&gt;The world is yours&lt;/h1&gt;</div><div class="line">    &lt;p&gt;Say hello to my little friend&lt;/p&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">)</div><div class="line"></div><div class="line">ReactDOM.render(RootElement, <span class="built_in">document</span>.getElementById(<span class="string">'app'</span>))</div></pre></td></tr></table></figure>
+<h2 id="构成"><a href="#构成" class="headerlink" title="构成"></a>构成</h2><p>前文提到React提供了一种用来render view的语言，下面就从这种语言的原子构成、<br>抽象手段、组合手段三个方面分析React。</p>
+<h3 id="原子构成"><a href="#原子构成" class="headerlink" title="原子构成"></a>原子构成</h3><ul>
+<li><p>React Elements</p>
+<p>上一节中的<figure class="highlight plain"><figcaption><span>Element。</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">  需要注意的是，这是**react** element，是JavaScript代码，而不是HTML element。</div><div class="line"></div><div class="line"></div><div class="line">### 抽象手段</div><div class="line">* React Components</div><div class="line"></div><div class="line">  Component是React的核心概念，典型的React代码就是一堆components。</div><div class="line">  那么什么是一个component呢？</div><div class="line">  一个典型的Component就是很常见的 ```&lt;select&gt;```，它不仅含有自身的可视化的部分，</div><div class="line">  同时还要处理它的点击展开、收回的逻辑。</div><div class="line"></div><div class="line">  ```js</div><div class="line">  &lt;select value=&#123;this.state.value&#125; onChange=&#123;this.handleChange&#125;&gt;</div><div class="line">    &#123;somearray.map(element =&gt; &lt;option value=&#123;element.value&#125;&gt;&#123;element.text&#125;&lt;/option&gt;)&#125;</div><div class="line">  &lt;/select&gt;</div></pre></td></tr></table></figure></p>
+<p>最常用的创建React component的方法是写一个符合ES6的class，其中包含一个<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">该方法返回‘HTML’（实质上，是JSX）。另外，也可以通过更```functional```的方式创建component。</div><div class="line"></div><div class="line">```js</div><div class="line">class MyComponent extends React.Component &#123;</div><div class="line">  render() &#123;</div><div class="line">    return &lt;p&gt;Hello World!&lt;p&gt;;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>Props<br>props，是‘properties’的缩写，是React component之间传递数据的手段。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ParentComponent</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</div><div class="line">    render() &#123;</div><div class="line">      <span class="keyword">return</span> &lt;ChildComponent message="Hello World"/&gt;;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">class ChildComponent extends React.Component &#123;</div><div class="line">  render() &#123;</div><div class="line">    return &lt;p&gt;And then I said, “&#123;this.props.message&#125;”&lt;/p&gt;;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意，数据的流向是<strong>单向</strong>的，都是从父Component向子Component传递。</p>
+</li>
+<li><p>States<br>props是静态的，而states是在用户使用过程中动态变化的，是纪录这个‘变化’当前的值的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyComponent</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</div><div class="line">  <span class="keyword">constructor</span>(props) &#123;</div><div class="line">    <span class="keyword">super</span>(props);</div><div class="line">    <span class="keyword">this</span>.state = &#123;<span class="attr">clicked</span>: <span class="literal">false</span>&#125;;</div><div class="line">  &#125;</div><div class="line">  handleClick = <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">clicked</span>: <span class="literal">true</span>&#125;);</div><div class="line">  &#125;</div><div class="line">  render() &#123;</div><div class="line">    <span class="keyword">return</span> &lt;a href="#" onClick=&#123;this.handleClick&#125;&gt;Click me&lt;/a&gt;;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p><a href="https://facebook.github.io/react/docs/state-and-lifecycle.html" target="_blank" rel="external">Lifecycle Methods</a></p>
+<p>在component特定的时间节点上（加载前、加载后、卸载。。。）可以作一些操作。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="组合手段"><a href="#组合手段" class="headerlink" title="组合手段"></a>组合手段</h3><ul>
+<li><p>Composition</p>
+<p>前面提到，使用React写的程序，就是由一个个Components组合而成的。通常可以将这些components<br>分为两类：Presentational Component 和 Container Component。</p>
+<ul>
+<li>presentational components：<ul>
+<li>关注<strong>看起来什么样</strong></li>
+<li>通常不依赖其他component</li>
+<li>通常不需要state，不关心数据变化</li>
+</ul>
+</li>
+<li>container components：<ul>
+<li>关注<strong>如何交互</strong></li>
+<li>为其他comopent提供data和行为（回调）</li>
+<li>有状态的</li>
+</ul>
+</li>
+</ul>
+<p>这样分类，更加有利于复用。</p>
+</li>
+</ul>
+<h2 id="思想"><a href="#思想" class="headerlink" title="思想"></a>思想</h2><h3 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h3><p>方便复用，逻辑更加清晰。</p>
+<h3 id="函数式-immutable"><a href="#函数式-immutable" class="headerlink" title="函数式-immutable"></a>函数式-immutable</h3><p> (props) =&gt; view 全量更新</p>
+<h3 id="Virtual-DOM-和-高效的Diff算法"><a href="#Virtual-DOM-和-高效的Diff算法" class="headerlink" title="Virtual DOM 和 高效的Diff算法"></a>Virtual DOM 和 高效的Diff算法</h3><p>  全量更新并不是真正地在DOM上操作，而是引入了一个额外的抽象层，叫作‘virtual dom’；<br>  全量更新的是’virtual DOM’层，然后在内存中比较更新前后的两个virtual DOM，运用<br>  高效的diff算法（类似于vim、git等采用的）计算出两者差异，再将差异的部分作用于DOM之上</p>
+<blockquote>
+<p>例子</p>
+</blockquote>
+<h2 id="工程化"><a href="#工程化" class="headerlink" title="工程化"></a>工程化</h2><h3 id="工具集"><a href="#工具集" class="headerlink" title="工具集"></a>工具集</h3><ul>
+<li>依赖管理<ul>
+<li>yarn</li>
+</ul>
+</li>
+<li>Bundle<ul>
+<li>webpack</li>
+</ul>
+</li>
+<li>Test<ul>
+<li>Jest</li>
+<li>Snapshots</li>
+<li>Enzyme</li>
+</ul>
+</li>
+<li>Transpilation<ul>
+<li>Babel</li>
+</ul>
+</li>
+<li>Hot Module Reload<ul>
+<li><a href="http://gaearon.github.io/react-hot-loader/" target="_blank" rel="external">React Hot Loader</a></li>
+</ul>
+</li>
+<li>Browser extensions<ul>
+<li><a href="https://github.com/facebook/react-devtools" target="_blank" rel="external">React Dev Tools</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="Starter-Project"><a href="#Starter-Project" class="headerlink" title="Starter Project"></a>Starter Project</h3><ul>
+<li>找一个<a href="http://andrewhfarmer.com/starter-project/" target="_blank" rel="external">合适的</a></li>
+</ul>
+<h2 id="资源-amp-参考"><a href="#资源-amp-参考" class="headerlink" title="资源&amp;参考"></a>资源&amp;参考</h2><ul>
+<li><a href="https://facebook.github.io/react/docs/thinking-in-react.html" target="_blank" rel="external">Thinking in React - Pete Hunt</a></li>
+<li><a href="https://medium.com/@ericclemmons/teaching-react-without-using-react-a4b87cfd4e87#.q8cyvryw1" target="_blank" rel="external">Teaching React Without Using React</a></li>
+<li><a href="http://aimforsimplicity.com/post/13-things-you-need-to-know-about-react" target="_blank" rel="external">13 things you need to know about React</a></li>
+<li><a href="https://medium.com/@sachagreif/the-5-things-you-need-to-know-to-understand-react-a1dbd5d114a3#.uii8of7um" target="_blank" rel="external">The 5 Things You Need To Know To Understand React</a></li>
+<li><a href="https://medium.freecodecamp.com/yes-react-is-taking-over-front-end-development-the-question-is-why-40837af8ab76" target="_blank" rel="external">Yes, React is taking over front-end development. The question is why</a></li>
+<li><a href="https://mva.microsoft.com/en-US/training-courses/introduction-to-react-16635?l=4wrKgdJrC_206218965" target="_blank" rel="external">Introduction to React Eric W. Greene / Microsoft Virtual Academy</a></li>
+<li><a href="https://tylermcginnis.com/react-aha-moments/" target="_blank" rel="external">React “Aha” Moments</a></li>
+<li><a href="https://egghead.io/lessons/react-react-in-7-minutes" target="_blank" rel="external">React in 7 Minutes</a></li>
+</ul>
+
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>Simple Fintech</h4>
+    <p>一个关于技术和金融知识的分享博客</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?url=http://yoursite.com/2017/05/19/React/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/05/19/React/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://yoursite.com/2017/05/19/React/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="../jvm-overview 2/">
+         →
+    </a>
+    
+</nav>
+  <div id="comment" class="comments-area">
+    <h1 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h1>
+
+    
+</div>
+</main>
+
+
+  
+<footer class="site-footer">
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">Simple Fintech</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+
+
+
+
+
+
+</body>
+</html>
