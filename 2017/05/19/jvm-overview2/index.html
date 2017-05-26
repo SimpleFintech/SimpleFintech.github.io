@@ -85,7 +85,7 @@
     </p>
   <p class="article-time">
     <time datetime="2017-05-19T06:51:05.000Z" itemprop="datePublished">2017-05-19</time>
-    更新日期:<time datetime="2017-05-26T07:27:21.560Z" itemprop="dateModified">2017-05-26</time>
+    更新日期:<time datetime="2017-05-26T07:31:31.063Z" itemprop="dateModified">2017-05-26</time>
     
   </p>
 </header>
@@ -93,21 +93,13 @@
 		
 			<div id="toc" class="toc-article">
 				<strong class="toc-title">文章目录</strong>
-				<ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#二-调优"><span class="toc-number"></span> <span class="toc-text">二. 调优</span></a>
+				<ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#垃圾回收"><span class="toc-number">1.</span> <span class="toc-text">垃圾回收</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#调优"><span class="toc-number">2.</span> <span class="toc-text">调优</span></a></li></ol>
 			</div>
 		
         <blockquote>
 <p>本文介绍了JVM相关基础知识，让开发者对JVM体系有一个大致的认识。主要涉及类的加载机制、类加载器、jvm内存结构、垃圾回收、JVM调优几个方面的知识。</p>
 </blockquote>
-<hr>
-<p>目录</p>
-<ol>
-<li>垃圾回收</li>
-<li>JVM调优</li>
-</ol>
-<hr>
-<p>#####一. GC </p>
-<h6 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h6><p>JVM 中，程序计数器、虚拟机栈、本地方法栈都是随线程而生随线程而灭，栈帧随着方法的进入和退出做入栈和出栈操作，实现了自动的内存清理，因此，我们的内存垃圾回收主要集中于 <strong>java 堆和方法区</strong>中，在程序运行期间，这部分内存的分配和使用都是动态的。</p>
+<h6 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h6><p>JVM 中，程序计数器、虚拟机栈、本地方法栈都是随线程而生随线程而灭，栈帧随着方法的进入和退出做入栈和出栈操作，实现了自动的内存清理，因此，我们的内存垃圾回收主要集中于 <strong>java 堆和方法区</strong>中，在程序运行期间，这部分内存的分配和使用都是动态的。</p>
 <p><img src="http://i.imgur.com/TtZiWqb.jpg" alt=""></p>
 <p>一般来说，当某个区域内存不够的时候就会进行垃圾收集。如当Eden区域分配不下对象时，就会进行年轻代的收集。还有其他的情况，如使用CMS收集器时配置CMSInitiatingOccupancyFraction设置什么时候触发Old区的回收。</p>
 <hr>
@@ -155,7 +147,7 @@
 <li>老年代中因为对象存活率高、没有额外空间对它进行分配担保，就必须使用<strong>“标记-清理”或“标记-整理”算法</strong>来进行回收</li>
 </ul>
 <hr>
-<h5 id="二-调优"><a href="#二-调优" class="headerlink" title="二. 调优"></a>二. 调优</h5><p>jvm调优就是根据gc日志分析jvm内存分配、回收的情况来调整各区域内存比例或者gc回收的策略；更深一层就是根据dump出来的内存结构和线程栈来分析代码中不合理的地方给予改进。</p>
+<h6 id="调优"><a href="#调优" class="headerlink" title="调优"></a>调优</h6><p>jvm调优就是根据gc日志分析jvm内存分配、回收的情况来调整各区域内存比例或者gc回收的策略；更深一层就是根据dump出来的内存结构和线程栈来分析代码中不合理的地方给予改进。</p>
 <p>（1）准则</p>
 <pre><code>- 堆大小的调优
     1. 一般来说越大越好（降低GC频率，但过大可能会增加单次GC时间）。
@@ -244,6 +236,8 @@ with(document)0[
 </article>
 
  <nav id="pagination" >
+    
+    <a href="/2017/05/19/React/" class="alignleft prev" title="React">React</a>
     
     
     <a href="/2017/05/19/jvm-overview1/" class="alignright next" title="JVM体系知识一：类的加载、内存结构">JVM体系知识一：类的加载、内存结构</a>
