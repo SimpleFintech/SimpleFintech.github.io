@@ -85,7 +85,7 @@
     </p>
   <p class="article-time">
     <time datetime="2017-05-19T06:51:05.000Z" itemprop="datePublished">2017-05-19</time>
-    更新日期:<time datetime="2017-05-26T07:31:31.063Z" itemprop="dateModified">2017-05-26</time>
+    更新日期:<time datetime="2017-05-26T07:41:05.972Z" itemprop="dateModified">2017-05-26</time>
     
   </p>
 </header>
@@ -93,17 +93,17 @@
 		
 			<div id="toc" class="toc-article">
 				<strong class="toc-title">文章目录</strong>
-				<ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#垃圾回收"><span class="toc-number">1.</span> <span class="toc-text">垃圾回收</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#调优"><span class="toc-number">2.</span> <span class="toc-text">调优</span></a></li></ol>
+				<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#垃圾回收"><span class="toc-number">1.</span> <span class="toc-text">垃圾回收</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调优"><span class="toc-number">2.</span> <span class="toc-text">调优</span></a></li></ol>
 			</div>
 		
         <blockquote>
 <p>本文介绍了JVM相关基础知识，让开发者对JVM体系有一个大致的认识。主要涉及类的加载机制、类加载器、jvm内存结构、垃圾回收、JVM调优几个方面的知识。</p>
 </blockquote>
-<h6 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h6><p>JVM 中，程序计数器、虚拟机栈、本地方法栈都是随线程而生随线程而灭，栈帧随着方法的进入和退出做入栈和出栈操作，实现了自动的内存清理，因此，我们的内存垃圾回收主要集中于 <strong>java 堆和方法区</strong>中，在程序运行期间，这部分内存的分配和使用都是动态的。</p>
+<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><p>JVM 中，程序计数器、虚拟机栈、本地方法栈都是随线程而生随线程而灭，栈帧随着方法的进入和退出做入栈和出栈操作，实现了自动的内存清理，因此，我们的内存垃圾回收主要集中于 <strong>java 堆和方法区</strong>中，在程序运行期间，这部分内存的分配和使用都是动态的。</p>
 <p><img src="http://i.imgur.com/TtZiWqb.jpg" alt=""></p>
 <p>一般来说，当某个区域内存不够的时候就会进行垃圾收集。如当Eden区域分配不下对象时，就会进行年轻代的收集。还有其他的情况，如使用CMS收集器时配置CMSInitiatingOccupancyFraction设置什么时候触发Old区的回收。</p>
 <hr>
-<p>######（1） 对象存活判断</p>
+<p>###1、 对象存活判断</p>
 <ul>
 <li>引用计数：每个对象有一个引用计数属性，新增一个引用时计数加1，引用释放时计数减1，计数为0时可以回收。此方法简单，无法解决对象相互循环引用的问题。</li>
 <li>可达性分析（Reachability Analysis）：从GC Roots开始向下搜索，搜索所走过的路径称为引用链。当一个对象到GC Roots没有任何引用链相连时，则证明此对象是不可用的。不可达对象。在Java语言中，GC Roots包括：<ul>
@@ -117,7 +117,7 @@
 </li>
 </ul>
 <hr>
-<p>######（2） 垃圾收集算法</p>
+<p>###2、 垃圾收集算法</p>
 <p><strong>“标记-清除”（Mark-Sweep）算法</strong>，算法分为“标记”和“清除”两个阶段：首先标记出所有需要回收的对象，在标记完成后统一回收掉所有被标记的对象。</p>
 <p>它的主要缺点有两个：一个是效率问题，标记和清除过程的效率都不高；另外一个是空间问题，标记清除之后会产生大量不连续的内存碎片，空间碎片太多可能会导致，当程序在以后的运行过程中需要分配较大对象时无法找到足够的连续内存而不得不提前触发另一次垃圾收集动作。</p>
 <p><strong>“复制”（Copying）的收集算法</strong>，它将可用内存按容量划分为大小相等的两块，每次只使用其中的一块。当这一块的内存用完了，就将还存活着的对象复制到另外一块上面，然后再把已使用过的内存空间一次清理掉。</p>
@@ -130,7 +130,7 @@
 </blockquote>
 <p><img src="http://i.imgur.com/odArvRK.jpg" alt=""></p>
 <hr>
-<p>######（3）垃圾收集器</p>
+<p>###3、垃圾收集器</p>
 <p><img src="http://i.imgur.com/LmhWgFZ.jpg" alt=""></p>
 <p>新生代GC</p>
 <ul>
@@ -147,8 +147,8 @@
 <li>老年代中因为对象存活率高、没有额外空间对它进行分配担保，就必须使用<strong>“标记-清理”或“标记-整理”算法</strong>来进行回收</li>
 </ul>
 <hr>
-<h6 id="调优"><a href="#调优" class="headerlink" title="调优"></a>调优</h6><p>jvm调优就是根据gc日志分析jvm内存分配、回收的情况来调整各区域内存比例或者gc回收的策略；更深一层就是根据dump出来的内存结构和线程栈来分析代码中不合理的地方给予改进。</p>
-<p>（1）准则</p>
+<h2 id="调优"><a href="#调优" class="headerlink" title="调优"></a>调优</h2><p>jvm调优就是根据gc日志分析jvm内存分配、回收的情况来调整各区域内存比例或者gc回收的策略；更深一层就是根据dump出来的内存结构和线程栈来分析代码中不合理的地方给予改进。</p>
+<p>###1、准则</p>
 <pre><code>- 堆大小的调优
     1. 一般来说越大越好（降低GC频率，但过大可能会增加单次GC时间）。
     2. 受硬件和操作系统限制。32位操作系统单进程最大可用内存为2G。
@@ -165,7 +165,7 @@
     2. （对CMS)在不要紧的时段手动进行full gc
     3. 大小的平衡：太大——单次gc时间长；太小——gc频率高
     4. 硬件和程序的优化（去掉不必要的缓存）
-</code></pre><p>（2）监控</p>
+</code></pre><p>###2、监控</p>
 <pre><code>- JVM
     1. -XX:+PrintGC 输出GC简要信息
     2. -XX:+PrintGCDetails 输出GC详细信息
@@ -175,7 +175,7 @@
 
 - 查看内存使用 ： jmap + jhat
 - 查看GC情况：jstat
-</code></pre><p>（3）如何分析GC日志<br>摘录GC日志一部分：</p>
+</code></pre><p>###3、如何分析GC日志<br>摘录GC日志一部分：</p>
 <p>2016-07-05T10:43:18.093+0800: 25.395: [GC [PSYoungGen: 274931K-&gt;10738K(274944K)] 371093K-&gt;147186K(450048K), 0.0668480 secs] [Times: user=0.17 sys=0.08, real=0.07 secs]</p>
 <p>2016-07-05T10:43:18.160+0800: 25.462: [Full GC [PSYoungGen: 10738K-&gt;0K(274944K)] [ParOldGen: 136447K-&gt;140379K(302592K)] 147186K-&gt;140379K(577536K) [PSPermGen: 85411K-&gt;85376K(171008K)], 0.6763541 secs] [Times: user=1.75 sys=0.02, real=0.68 secs]</p>
 <p>通过上面日志分析得出，PSYoungGen、ParOldGen、PSPermGen属于Parallel收集器。其中PSYoungGen表示gc回收前后年轻代的内存变化；ParOldGen表示gc回收前后老年代的内存变化；PSPermGen表示gc回收前后永久区的内存变化。young gc 主要是针对年轻代进行内存回收比较频繁，耗时短；full gc 会对整个堆内存进行回城，耗时长，因此一般尽量减少full gc的次数</p>
@@ -239,8 +239,6 @@ with(document)0[
     
     <a href="/2017/05/19/React/" class="alignleft prev" title="React">React</a>
     
-    
-    <a href="/2017/05/19/jvm-overview1/" class="alignright next" title="JVM体系知识一：类的加载、内存结构">JVM体系知识一：类的加载、内存结构</a>
     
     <div class="clearfix"></div>
 </nav>
