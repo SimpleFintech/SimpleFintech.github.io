@@ -85,7 +85,7 @@
     </p>
   <p class="article-time">
     <time datetime="2017-05-19T06:51:05.000Z" itemprop="datePublished">2017-05-19</time>
-    更新日期:<time datetime="2017-05-26T07:41:05.972Z" itemprop="dateModified">2017-05-26</time>
+    更新日期:<time datetime="2017-05-26T07:48:56.383Z" itemprop="dateModified">2017-05-26</time>
     
   </p>
 </header>
@@ -93,7 +93,7 @@
 		
 			<div id="toc" class="toc-article">
 				<strong class="toc-title">文章目录</strong>
-				<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#垃圾回收"><span class="toc-number">1.</span> <span class="toc-text">垃圾回收</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调优"><span class="toc-number">2.</span> <span class="toc-text">调优</span></a></li></ol>
+				<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#垃圾回收"><span class="toc-number">1.</span> <span class="toc-text">垃圾回收</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#对象存活判断"><span class="toc-number">1.1.</span> <span class="toc-text">对象存活判断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#垃圾收集算法"><span class="toc-number">1.2.</span> <span class="toc-text">垃圾收集算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#垃圾收集器"><span class="toc-number">1.3.</span> <span class="toc-text">垃圾收集器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调优"><span class="toc-number">2.</span> <span class="toc-text">调优</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#准则"><span class="toc-number">2.1.</span> <span class="toc-text">准则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#监控"><span class="toc-number">2.2.</span> <span class="toc-text">监控</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何分析GC日志"><span class="toc-number">2.3.</span> <span class="toc-text">如何分析GC日志</span></a></li></ol></li></ol>
 			</div>
 		
         <blockquote>
@@ -103,8 +103,7 @@
 <p><img src="http://i.imgur.com/TtZiWqb.jpg" alt=""></p>
 <p>一般来说，当某个区域内存不够的时候就会进行垃圾收集。如当Eden区域分配不下对象时，就会进行年轻代的收集。还有其他的情况，如使用CMS收集器时配置CMSInitiatingOccupancyFraction设置什么时候触发Old区的回收。</p>
 <hr>
-<p>###1、 对象存活判断</p>
-<ul>
+<h3 id="对象存活判断"><a href="#对象存活判断" class="headerlink" title="对象存活判断"></a>对象存活判断</h3><ul>
 <li>引用计数：每个对象有一个引用计数属性，新增一个引用时计数加1，引用释放时计数减1，计数为0时可以回收。此方法简单，无法解决对象相互循环引用的问题。</li>
 <li>可达性分析（Reachability Analysis）：从GC Roots开始向下搜索，搜索所走过的路径称为引用链。当一个对象到GC Roots没有任何引用链相连时，则证明此对象是不可用的。不可达对象。在Java语言中，GC Roots包括：<ul>
 <li>虚拟机栈中引用的对象。<ul>
@@ -117,8 +116,7 @@
 </li>
 </ul>
 <hr>
-<p>###2、 垃圾收集算法</p>
-<p><strong>“标记-清除”（Mark-Sweep）算法</strong>，算法分为“标记”和“清除”两个阶段：首先标记出所有需要回收的对象，在标记完成后统一回收掉所有被标记的对象。</p>
+<h3 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h3><p><strong>“标记-清除”（Mark-Sweep）算法</strong>，算法分为“标记”和“清除”两个阶段：首先标记出所有需要回收的对象，在标记完成后统一回收掉所有被标记的对象。</p>
 <p>它的主要缺点有两个：一个是效率问题，标记和清除过程的效率都不高；另外一个是空间问题，标记清除之后会产生大量不连续的内存碎片，空间碎片太多可能会导致，当程序在以后的运行过程中需要分配较大对象时无法找到足够的连续内存而不得不提前触发另一次垃圾收集动作。</p>
 <p><strong>“复制”（Copying）的收集算法</strong>，它将可用内存按容量划分为大小相等的两块，每次只使用其中的一块。当这一块的内存用完了，就将还存活着的对象复制到另外一块上面，然后再把已使用过的内存空间一次清理掉。</p>
 <p>这样使得每次都是对其中的一块进行内存回收，内存分配时也就不用考虑内存碎片等复杂情况，只要移动堆顶指针，按顺序分配内存即可，实现简单，运行高效。只是这种算法的代价是将内存缩小为原来的一半，持续复制长生存期的对象则导致效率降低。</p>
@@ -130,8 +128,7 @@
 </blockquote>
 <p><img src="http://i.imgur.com/odArvRK.jpg" alt=""></p>
 <hr>
-<p>###3、垃圾收集器</p>
-<p><img src="http://i.imgur.com/LmhWgFZ.jpg" alt=""></p>
+<h3 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h3><p><img src="http://i.imgur.com/LmhWgFZ.jpg" alt=""></p>
 <p>新生代GC</p>
 <ul>
 <li>均使用<strong>复制</strong>算法，原理上是一致的：<ul>
@@ -148,8 +145,7 @@
 </ul>
 <hr>
 <h2 id="调优"><a href="#调优" class="headerlink" title="调优"></a>调优</h2><p>jvm调优就是根据gc日志分析jvm内存分配、回收的情况来调整各区域内存比例或者gc回收的策略；更深一层就是根据dump出来的内存结构和线程栈来分析代码中不合理的地方给予改进。</p>
-<p>###1、准则</p>
-<pre><code>- 堆大小的调优
+<h3 id="准则"><a href="#准则" class="headerlink" title="准则"></a>准则</h3><pre><code>- 堆大小的调优
     1. 一般来说越大越好（降低GC频率，但过大可能会增加单次GC时间）。
     2. 受硬件和操作系统限制。32位操作系统单进程最大可用内存为2G。
     3. 堆每次调整都会触发一次Full GC, 避免频繁调整，可以设置-Xms = -Xmx，但也不是决对。
@@ -165,8 +161,7 @@
     2. （对CMS)在不要紧的时段手动进行full gc
     3. 大小的平衡：太大——单次gc时间长；太小——gc频率高
     4. 硬件和程序的优化（去掉不必要的缓存）
-</code></pre><p>###2、监控</p>
-<pre><code>- JVM
+</code></pre><h3 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h3><pre><code>- JVM
     1. -XX:+PrintGC 输出GC简要信息
     2. -XX:+PrintGCDetails 输出GC详细信息
     3. -XX:+printGCTimeStamps 输出GC时间戳
@@ -175,7 +170,7 @@
 
 - 查看内存使用 ： jmap + jhat
 - 查看GC情况：jstat
-</code></pre><p>###3、如何分析GC日志<br>摘录GC日志一部分：</p>
+</code></pre><h3 id="如何分析GC日志"><a href="#如何分析GC日志" class="headerlink" title="如何分析GC日志"></a>如何分析GC日志</h3><p>摘录GC日志一部分：</p>
 <p>2016-07-05T10:43:18.093+0800: 25.395: [GC [PSYoungGen: 274931K-&gt;10738K(274944K)] 371093K-&gt;147186K(450048K), 0.0668480 secs] [Times: user=0.17 sys=0.08, real=0.07 secs]</p>
 <p>2016-07-05T10:43:18.160+0800: 25.462: [Full GC [PSYoungGen: 10738K-&gt;0K(274944K)] [ParOldGen: 136447K-&gt;140379K(302592K)] 147186K-&gt;140379K(577536K) [PSPermGen: 85411K-&gt;85376K(171008K)], 0.6763541 secs] [Times: user=1.75 sys=0.02, real=0.68 secs]</p>
 <p>通过上面日志分析得出，PSYoungGen、ParOldGen、PSPermGen属于Parallel收集器。其中PSYoungGen表示gc回收前后年轻代的内存变化；ParOldGen表示gc回收前后老年代的内存变化；PSPermGen表示gc回收前后永久区的内存变化。young gc 主要是针对年轻代进行内存回收比较频繁，耗时短；full gc 会对整个堆内存进行回城，耗时长，因此一般尽量减少full gc的次数</p>
@@ -239,6 +234,8 @@ with(document)0[
     
     <a href="/2017/05/19/React/" class="alignleft prev" title="React">React</a>
     
+    
+    <a href="/2017/05/19/jvm-overview1/" class="alignright next" title="JVM体系知识一：类的加载、内存结构">JVM体系知识一：类的加载、内存结构</a>
     
     <div class="clearfix"></div>
 </nav>
